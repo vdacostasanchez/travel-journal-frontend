@@ -6,9 +6,7 @@ export function TripsIndex(props) {
       {props.trips.map((trip) => (
         <div key={trip.id}>
           <h2>{trip.location}</h2>
-          <p>
-            {trip.start_date} - {trip.end_date}
-          </p>
+          <button onClick={() => props.onShowTrip(trip)}>More Info</button>
         </div>
       ))}
     </div>
