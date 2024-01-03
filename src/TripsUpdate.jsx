@@ -1,4 +1,9 @@
 export function TripsUpdate(props) {
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const params = new FormData(event.target);
+    props.onUpdateTrip(props.trip.id, params, () => event.target.reset());
+  };
   return (
     <div>
       <h1>Update Trip</h1>

@@ -1,5 +1,5 @@
 export function TripsIndex(props) {
-  console.log(props);
+  console.log(props, "hello");
   return (
     <div>
       <h1>All Trips</h1>
@@ -7,6 +7,7 @@ export function TripsIndex(props) {
         <div key={trip.id}>
           <h2>{trip.location}</h2>
           <button onClick={() => props.onShowTrip(trip)}>More Info</button>
+          <button onClick={() => props.onUpdateTrip(trip)}>Update Trip</button>
         </div>
       ))}
     </div>

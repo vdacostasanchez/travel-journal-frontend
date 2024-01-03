@@ -1,6 +1,7 @@
 import { TripsIndex } from "./TripsIndex";
 import { TripsNew } from "./TripsNew";
 import { TripsShow } from "./TripsShow";
+import { TripsUpdate } from "./TripsUpdate";
 import { Signup } from "./Signup";
 import { Login } from "./Login";
 import { Modal } from "./Modal";
@@ -11,6 +12,7 @@ import axios from "axios";
 export function Content() {
   const [trips, setTrips] = useState([]);
   const [isTripsShowVisible, setIsTripsShowVisible] = useState(false);
+  const [isTripsUpdateVisible, setIsTripsUpdateVisible] = useState(false);
   const [currentTrip, setCurrentTrip] = useState({});
 
   const handleIndexTrips = () => {
@@ -34,19 +36,50 @@ export function Content() {
     setCurrentTrip(trip);
   };
 
-  const handleClose = () => {
+  const handleUpdateShowTrip = (trip) => {
+    setIsTripsUpdateVisible(true);
+    setCurrentTrip(trip);
+  };
+
+  const handleUpdateTrip = (id, params, successCallback) => {
+    axios.patch(`http://localhost:3000/trips/${id}.json`, params).then((response) => {
+      setTrips(
+        trips.map((trip) => {
+          if (trip.id === response.data.id) {
+            return response.data;
+          } else {
+            return trip;
+          }
+        })
+      );
+      successCallback();
+      handleClose();
+    });
+  };
+
+  const handleCloseShow = () => {
     setIsTripsShowVisible(false);
+  };
+
+  const handleCloseUpdate = () => {
+    setIsTripsUpdateVisible(false);
   };
 
   return (
     <main>
       <h1>Welcome to your Travel Journal!</h1>
       <Routes>
-        <Route path="/trips" element={<TripsIndex trips={trips} onShowTrip={handleShowTrip} />} />
+        <Route
+          path="/trips"
+          element={<TripsIndex trips={trips} onShowTrip={handleShowTrip} onUpdateTrip={handleUpdateShowTrip} />}
+        />
         <Route path="/trips/new" element={<TripsNew onCreateTrip={handleCreateTrip} />} />
       </Routes>
-      <Modal show={isTripsShowVisible} onClose={handleClose}>
+      <Modal show={isTripsShowVisible} onClose={handleCloseShow}>
         <TripsShow trip={currentTrip} />
+      </Modal>
+      <Modal show={isTripsUpdateVisible} onClose={handleCloseUpdate}>
+        <TripsUpdate trip={currentTrip} onUpdateTrip={handleUpdateTrip} />
       </Modal>
       <Signup />
       <Login />
