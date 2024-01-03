@@ -34,7 +34,7 @@ export function Signup() {
           Name: <input type="text" name="name" />
         </div>
         <div>
-          Email: <input type="text" name="email" />
+          Email: <input type="email" name="email" />
         </div>
         <div>
           Password: <input type="password" name="password" />
