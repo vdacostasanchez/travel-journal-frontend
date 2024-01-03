@@ -1,4 +1,5 @@
 import { TripsIndex } from "./TripsIndex";
+import { TripsNew } from "./TripsNew";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -14,9 +15,17 @@ export function Content() {
 
   useEffect(handleIndexTrips, []);
 
+  const handleCreateTrip = (params, successCallback) => {
+    axios.post("http://localhost:3000/trips.json", params).then((response) => {
+      setTrips([...trips, response.data]);
+      successCallback();
+    });
+  };
+
   return (
     <main>
       <h1>Welcome to your Travel Journal!</h1>
+      <TripsNew onCreateTrip={handleCreateTrip} />
       <TripsIndex trips={trips} />
     </main>
   );
