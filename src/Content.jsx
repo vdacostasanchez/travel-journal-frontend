@@ -1,5 +1,6 @@
 import { TripsIndex } from "./TripsIndex";
 import { TripsNew } from "./TripsNew";
+import { Signup } from "./Signup";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -25,6 +26,7 @@ export function Content() {
   return (
     <main>
       <h1>Welcome to your Travel Journal!</h1>
+      <Signup />
       <TripsNew onCreateTrip={handleCreateTrip} />
       <TripsIndex trips={trips} />
     </main>
