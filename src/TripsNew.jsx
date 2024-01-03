@@ -13,10 +13,10 @@ export function TripsNew(props) {
           Start Date: <input type="date" name="start_date" />
         </div>
         <div>
-          End Date: <input type="date" name="start_date" />
+          End Date: <input type="date" name="end_date" />
         </div>
         <div>
-          Location: <input type="text" name="start_date" />
+          Location: <input type="text" name="location" />
         </div>
         <button type="submit">Create Trip</button>
       </form>
