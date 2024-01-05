@@ -2,6 +2,7 @@ import { TripsIndex } from "./TripsIndex";
 import { TripsNew } from "./TripsNew";
 import { TripsShow } from "./TripsShow";
 import { TripsUpdate } from "./TripsUpdate";
+import { JournalEntriesIndex } from "./JournalEntriesIndex";
 import { Signup } from "./Signup";
 import { Login } from "./Login";
 import { Modal } from "./Modal";
@@ -14,6 +15,7 @@ export function Content() {
   const [isTripsShowVisible, setIsTripsShowVisible] = useState(false);
   const [isTripsUpdateVisible, setIsTripsUpdateVisible] = useState(false);
   const [currentTrip, setCurrentTrip] = useState({});
+  const [journalEntries, setJournalEntries] = useState([]);
 
   const handleIndexTrips = () => {
     axios.get("http://localhost:3000/trips.json").then((response) => {
@@ -72,6 +74,14 @@ export function Content() {
     setIsTripsUpdateVisible(false);
   };
 
+  const handleIndexJournalEntries = () => {
+    axios.get("http://localhost:3000/journal_entries.json").then((response) => {
+      setJournalEntries(response.data);
+    });
+  };
+
+  useEffect(handleIndexJournalEntries, []);
+
   return (
     <main className="container">
       <h1>Welcome to your Travel Journal!</h1>
@@ -85,6 +95,7 @@ export function Content() {
           path="/trips"
           element={<TripsIndex trips={trips} onShowTrip={handleShowTrip} onUpdateTrip={handleUpdateShowTrip} />}
         />
+        <Route path="/journal_entries" element={<JournalEntriesIndex journalEntries={journalEntries} />} />
         <Route path="/trips/new" element={<TripsNew onCreateTrip={handleCreateTrip} />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />

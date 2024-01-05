@@ -50,6 +50,29 @@ export function Header() {
                   </li>
                 </ul>
               </li>
+              <li className="nav-item dropdown">
+                <Link
+                  className="nav-link dropdown-toggle"
+                  to="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Journal Entries
+                </Link>
+                <ul className="dropdown-menu">
+                  <li>
+                    <Link className="dropdown-item" to="/journal_entries">
+                      All Journal Entries
+                    </Link>
+                  </li>
+                  <li>
+                    <Link className="dropdown-item" to="/journal_entries/new">
+                      New Journal Entry
+                    </Link>
+                  </li>
+                </ul>
+              </li>
               {localStorage.jwt === undefined ? (
                 <>
                   <li className="nav-item">
