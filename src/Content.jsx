@@ -6,6 +6,7 @@ import { JournalEntriesIndex } from "./JournalEntriesIndex";
 import { JournalEntriesNew } from "./JournalEntriesNew";
 import { JournalEntriesShow } from "./JournalEntriesShow";
 import { JournalEntriesUpdate } from "./JournalEntriesUpdate";
+import { MyMap } from "./MyMap";
 import { Signup } from "./Signup";
 import { Login } from "./Login";
 import { Modal } from "./Modal";
@@ -145,10 +146,7 @@ export function Content() {
       <h1>Welcome to your Travel Journal!</h1>
 
       <Routes>
-        <Route
-          path="/"
-          element={<TripsIndex trips={trips} onShowTrip={handleShowTrip} onUpdateTrip={handleUpdateShowTrip} />}
-        />
+        <Route path="/" element={<MyMap />} />
         <Route
           path="/trips"
           element={<TripsIndex trips={trips} onShowTrip={handleShowTrip} onUpdateTrip={handleUpdateShowTrip} />}
