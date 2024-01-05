@@ -9,6 +9,7 @@ import { JournalEntriesUpdate } from "./JournalEntriesUpdate";
 import { PlacesIndex } from "./PlacesIndex";
 import { PlacesNew } from "./PlacesNew";
 import { PlacesShow } from "./PlacesShow";
+import { PlacesUpdate } from "./PlacesUpdate";
 import { MyMap } from "./MyMap";
 import { Signup } from "./Signup";
 import { Login } from "./Login";
@@ -31,7 +32,7 @@ export function Content() {
   //places
   const [places, setPlaces] = useState([]);
   const [isPlacesShowVisible, setIsPlacesShowVisible] = useState(false);
-  // const [isPlacesUpdateVisible, setIsPlacesUpdateVisible] = useState(false);
+  const [isPlacesUpdateVisible, setIsPlacesUpdateVisible] = useState(false);
   const [currentPlace, setCurrentPlace] = useState({});
 
   //trips
@@ -174,6 +175,31 @@ export function Content() {
     setIsPlacesShowVisible(false);
   };
 
+  const handleCloseUpdatePlaces = () => {
+    setIsPlacesUpdateVisible(false);
+  };
+
+  const handleUpdateShowPlace = (place) => {
+    setIsPlacesUpdateVisible(true);
+    setCurrentPlace(place);
+  };
+
+  const handleUpdatePlace = (id, params, successCallback) => {
+    axios.patch(`http://localhost:3000/places/${id}.json`, params).then((response) => {
+      setPlaces(
+        places.map((place) => {
+          if (place.id === response.data.id) {
+            return response.data;
+          } else {
+            return place;
+          }
+        })
+      );
+      successCallback();
+      handleCloseUpdatePlaces();
+    });
+  };
+
   return (
     <main className="container">
       <h1>Welcome to your Travel Journal!</h1>
@@ -201,7 +227,10 @@ export function Content() {
           element={<JournalEntriesNew trips={trips} onCreateJournalEntry={handleCreateJournalEntry} />}
         />
 
-        <Route path="/places" element={<PlacesIndex places={places} onShowPlace={handleShowPlace} />} />
+        <Route
+          path="/places"
+          element={<PlacesIndex places={places} onShowPlace={handleShowPlace} onUpdatePlace={handleUpdateShowPlace} />}
+        />
         <Route path="/places/new" element={<PlacesNew trips={trips} onCreatePlace={handleCreatePlace} />} />
 
         <Route path="/map" element={<MyMap />} />
@@ -229,6 +258,14 @@ export function Content() {
 
       <Modal show={isPlacesShowVisible} onClose={handleCloseShowPlaces}>
         <PlacesShow place={currentPlace} />
+      </Modal>
+      <Modal show={isPlacesUpdateVisible} onClose={handleCloseUpdatePlaces}>
+        <PlacesUpdate
+          trips={trips}
+          place={currentPlace}
+          onUpdatePlace={handleUpdatePlace}
+          // onDestroyPlace={handleDestroyPlace}
+        />
       </Modal>
     </main>
   );
