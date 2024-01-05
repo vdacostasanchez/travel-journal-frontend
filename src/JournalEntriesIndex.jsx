@@ -7,6 +7,7 @@ export function JournalEntriesIndex(props) {
           <h2>{journalEntry.title}</h2>
           <p>{journalEntry.date}</p>
           <button onClick={() => props.onShowJournalEntry(journalEntry)}>More Info</button>
+          <button onClick={() => props.onUpdateJournalEntry(journalEntry)}>Update Journal Entry</button>
         </div>
       ))}
     </div>

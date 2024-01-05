@@ -5,6 +5,7 @@ import { TripsUpdate } from "./TripsUpdate";
 import { JournalEntriesIndex } from "./JournalEntriesIndex";
 import { JournalEntriesNew } from "./JournalEntriesNew";
 import { JournalEntriesShow } from "./JournalEntriesShow";
+import { JournalEntriesUpdate } from "./JournalEntriesUpdate";
 import { Signup } from "./Signup";
 import { Login } from "./Login";
 import { Modal } from "./Modal";
@@ -13,14 +14,18 @@ import { Route, Routes } from "react-router-dom";
 import axios from "axios";
 
 export function Content() {
+  //trips
   const [trips, setTrips] = useState([]);
   const [isTripsShowVisible, setIsTripsShowVisible] = useState(false);
   const [isTripsUpdateVisible, setIsTripsUpdateVisible] = useState(false);
   const [currentTrip, setCurrentTrip] = useState({});
+  //journal entries
   const [journalEntries, setJournalEntries] = useState([]);
   const [isJournalEntriesShowVisible, setIsJournalEntriesShowVisible] = useState(false);
+  const [isJournalEntriesUpdateVisible, setIsJournalEntriesUpdateVisible] = useState(false);
   const [currentJournalEntry, setCurrentJournalEntry] = useState({});
 
+  //trips
   const handleIndexTrips = () => {
     axios.get("http://localhost:3000/trips.json").then((response) => {
       setTrips(response.data);
@@ -58,7 +63,7 @@ export function Content() {
         })
       );
       successCallback();
-      handleCloseUpdate();
+      handleCloseUpdateTrip();
     });
   };
 
@@ -66,18 +71,19 @@ export function Content() {
     axios.delete(`http://localhost:3000/trips/${id}.json`).then((response) => {
       console.log(response);
       setTrips(trips.filter((t) => t.id !== id));
-      handleCloseUpdate();
+      handleCloseUpdateTrip();
     });
   };
 
-  const handleCloseShow = () => {
+  const handleCloseShowTrip = () => {
     setIsTripsShowVisible(false);
   };
 
-  const handleCloseUpdate = () => {
+  const handleCloseUpdateTrip = () => {
     setIsTripsUpdateVisible(false);
   };
 
+  //journal entries
   const handleIndexJournalEntries = () => {
     axios.get("http://localhost:3000/journal_entries.json").then((response) => {
       setJournalEntries(response.data);
@@ -98,10 +104,33 @@ export function Content() {
     setCurrentJournalEntry(journalEntry);
   };
 
-  const handleClose = () => {
-    setIsJournalEntriesShowVisible(false);
+  const handleUpdateShowJournalEntry = (journalEntry) => {
+    setIsJournalEntriesUpdateVisible(true);
+    setCurrentJournalEntry(journalEntry);
   };
 
+  const handleCloseShowJournalEntries = () => {
+    setIsJournalEntriesShowVisible(false);
+  };
+  const handleCloseUpdateJournalEntries = () => {
+    setIsJournalEntriesUpdateVisible(false);
+  };
+
+  const handleUpdateJournalEntry = (id, params, successCallback) => {
+    axios.patch(`http://localhost:3000/journal_entries/${id}.json`, params).then((response) => {
+      setJournalEntries(
+        journalEntries.map((journalEntry) => {
+          if (journalEntry.id === response.data.id) {
+            return response.data;
+          } else {
+            return journalEntry;
+          }
+        })
+      );
+      successCallback();
+      handleCloseUpdateJournalEntries();
+    });
+  };
   return (
     <main className="container">
       <h1>Welcome to your Travel Journal!</h1>
@@ -119,7 +148,13 @@ export function Content() {
 
         <Route
           path="/journal_entries"
-          element={<JournalEntriesIndex journalEntries={journalEntries} onShowJournalEntry={handleShowJournalEntry} />}
+          element={
+            <JournalEntriesIndex
+              journalEntries={journalEntries}
+              onShowJournalEntry={handleShowJournalEntry}
+              onUpdateJournalEntry={handleUpdateShowJournalEntry}
+            />
+          }
         />
         <Route
           path="/journal_entries/new"
@@ -129,15 +164,22 @@ export function Content() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
       </Routes>
-      <Modal show={isTripsShowVisible} onClose={handleCloseShow}>
+      <Modal show={isTripsShowVisible} onClose={handleCloseShowTrip}>
         <TripsShow trip={currentTrip} />
       </Modal>
-      <Modal show={isTripsUpdateVisible} onClose={handleCloseUpdate}>
+      <Modal show={isTripsUpdateVisible} onClose={handleCloseUpdateTrip}>
         <TripsUpdate trip={currentTrip} onUpdateTrip={handleUpdateTrip} onDestroyTrip={handleDestroyTrip} />
       </Modal>
 
-      <Modal show={isJournalEntriesShowVisible} onClose={handleClose}>
+      <Modal show={isJournalEntriesShowVisible} onClose={handleCloseShowJournalEntries}>
         <JournalEntriesShow journalEntry={currentJournalEntry} />
+      </Modal>
+      <Modal show={isJournalEntriesUpdateVisible} onClose={handleCloseUpdateJournalEntries}>
+        <JournalEntriesUpdate
+          trips={trips}
+          journalEntry={currentJournalEntry}
+          onUpdateJournalEntry={handleUpdateJournalEntry}
+        />
       </Modal>
     </main>
   );
