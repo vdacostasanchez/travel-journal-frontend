@@ -6,9 +6,9 @@ export function Header() {
     <header>
       <nav className="navbar navbar-expand-lg bg-light">
         <div className="container-fluid">
-          <a className="navbar-brand" href="#">
+          <Link className="navbar-brand" to="/">
             Travel Journal
-          </a>
+          </Link>
           <button
             className="navbar-toggler"
             type="button"
@@ -25,6 +25,11 @@ export function Header() {
               <li className="nav-item">
                 <Link className="nav-link active" aria-current="page" to="/">
                   Home
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link active" aria-current="page" to="/map">
+                  Map
                 </Link>
               </li>
               <li className="nav-item dropdown">
@@ -69,6 +74,29 @@ export function Header() {
                   <li>
                     <Link className="dropdown-item" to="/journal_entries/new">
                       New Journal Entry
+                    </Link>
+                  </li>
+                </ul>
+              </li>
+              <li className="nav-item dropdown">
+                <Link
+                  className="nav-link dropdown-toggle"
+                  to="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Places
+                </Link>
+                <ul className="dropdown-menu">
+                  <li>
+                    <Link className="dropdown-item" to="/places">
+                      All Places
+                    </Link>
+                  </li>
+                  <li>
+                    <Link className="dropdown-item" to="/places/new">
+                      New Place
                     </Link>
                   </li>
                 </ul>

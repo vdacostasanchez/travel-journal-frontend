@@ -6,6 +6,7 @@ import { JournalEntriesIndex } from "./JournalEntriesIndex";
 import { JournalEntriesNew } from "./JournalEntriesNew";
 import { JournalEntriesShow } from "./JournalEntriesShow";
 import { JournalEntriesUpdate } from "./JournalEntriesUpdate";
+import { PlacesIndex } from "./PlacesIndex";
 import { MyMap } from "./MyMap";
 import { Signup } from "./Signup";
 import { Login } from "./Login";
@@ -25,6 +26,11 @@ export function Content() {
   const [isJournalEntriesShowVisible, setIsJournalEntriesShowVisible] = useState(false);
   const [isJournalEntriesUpdateVisible, setIsJournalEntriesUpdateVisible] = useState(false);
   const [currentJournalEntry, setCurrentJournalEntry] = useState({});
+  //places
+  const [places, setPlaces] = useState([]);
+  // const [isPlacesShowVisible, setIsPlacesShowVisible] = useState(false);
+  // const [isPlacesUpdateVisible, setIsPlacesUpdateVisible] = useState(false);
+  // const [currentPlace, setCurrentPlace] = useState({});
 
   //trips
   const handleIndexTrips = () => {
@@ -141,6 +147,15 @@ export function Content() {
     });
   };
 
+  //places
+  const handleIndexPlaces = () => {
+    axios.get("http://localhost:3000/places.json").then((response) => {
+      setPlaces(response.data);
+    });
+  };
+
+  useEffect(handleIndexPlaces, []);
+
   return (
     <main className="container">
       <h1>Welcome to your Travel Journal!</h1>
@@ -168,6 +183,9 @@ export function Content() {
           element={<JournalEntriesNew trips={trips} onCreateJournalEntry={handleCreateJournalEntry} />}
         />
 
+        <Route path="/places" element={<PlacesIndex places={places} />} />
+
+        <Route path="/map" element={<MyMap />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
       </Routes>
