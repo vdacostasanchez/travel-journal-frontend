@@ -131,6 +131,15 @@ export function Content() {
       handleCloseUpdateJournalEntries();
     });
   };
+
+  const handleDestroyJournalEntry = (journalEntry) => {
+    axios.delete(`http://localhost:3000/journal_entries/${journalEntry.id}.json`).then((response) => {
+      console.log(response);
+      setJournalEntries(journalEntries.filter((j) => j.id !== journalEntry.id));
+      handleCloseUpdateJournalEntries();
+    });
+  };
+
   return (
     <main className="container">
       <h1>Welcome to your Travel Journal!</h1>
@@ -179,6 +188,7 @@ export function Content() {
           trips={trips}
           journalEntry={currentJournalEntry}
           onUpdateJournalEntry={handleUpdateJournalEntry}
+          onDestroyJournalEntry={handleDestroyJournalEntry}
         />
       </Modal>
     </main>

@@ -4,6 +4,10 @@ export function JournalEntriesUpdate(props) {
     const params = new FormData(event.target);
     props.onUpdateJournalEntry(props.journalEntry.id, params, () => event.target.reset());
   };
+
+  const handleClick = () => {
+    props.onDestroyJournalEntry(props.journalEntry);
+  };
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -28,6 +32,7 @@ export function JournalEntriesUpdate(props) {
         </div>
         <button type="submit">Update Journal Entry</button>
       </form>
+      <button onClick={handleClick}>Destroy Journal Entry</button>
     </div>
   );
 }
