@@ -78,6 +78,10 @@ export function Content() {
 
       <Routes>
         <Route
+          path="/"
+          element={<TripsIndex trips={trips} onShowTrip={handleShowTrip} onUpdateTrip={handleUpdateShowTrip} />}
+        />
+        <Route
           path="/trips"
           element={<TripsIndex trips={trips} onShowTrip={handleShowTrip} onUpdateTrip={handleUpdateShowTrip} />}
         />

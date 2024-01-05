@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom";
-
 export function TripsIndex(props) {
   return (
     <div>
