@@ -8,6 +8,7 @@ import { JournalEntriesShow } from "./JournalEntriesShow";
 import { JournalEntriesUpdate } from "./JournalEntriesUpdate";
 import { PlacesIndex } from "./PlacesIndex";
 import { PlacesNew } from "./PlacesNew";
+import { PlacesShow } from "./PlacesShow";
 import { MyMap } from "./MyMap";
 import { Signup } from "./Signup";
 import { Login } from "./Login";
@@ -29,9 +30,9 @@ export function Content() {
   const [currentJournalEntry, setCurrentJournalEntry] = useState({});
   //places
   const [places, setPlaces] = useState([]);
-  // const [isPlacesShowVisible, setIsPlacesShowVisible] = useState(false);
+  const [isPlacesShowVisible, setIsPlacesShowVisible] = useState(false);
   // const [isPlacesUpdateVisible, setIsPlacesUpdateVisible] = useState(false);
-  // const [currentPlace, setCurrentPlace] = useState({});
+  const [currentPlace, setCurrentPlace] = useState({});
 
   //trips
   const handleIndexTrips = () => {
@@ -164,6 +165,15 @@ export function Content() {
     });
   };
 
+  const handleShowPlace = (place) => {
+    setIsPlacesShowVisible(true);
+    setCurrentPlace(place);
+  };
+
+  const handleCloseShowPlaces = () => {
+    setIsPlacesShowVisible(false);
+  };
+
   return (
     <main className="container">
       <h1>Welcome to your Travel Journal!</h1>
@@ -191,7 +201,7 @@ export function Content() {
           element={<JournalEntriesNew trips={trips} onCreateJournalEntry={handleCreateJournalEntry} />}
         />
 
-        <Route path="/places" element={<PlacesIndex places={places} />} />
+        <Route path="/places" element={<PlacesIndex places={places} onShowPlace={handleShowPlace} />} />
         <Route path="/places/new" element={<PlacesNew trips={trips} onCreatePlace={handleCreatePlace} />} />
 
         <Route path="/map" element={<MyMap />} />
@@ -215,6 +225,10 @@ export function Content() {
           onUpdateJournalEntry={handleUpdateJournalEntry}
           onDestroyJournalEntry={handleDestroyJournalEntry}
         />
+      </Modal>
+
+      <Modal show={isPlacesShowVisible} onClose={handleCloseShowPlaces}>
+        <PlacesShow place={currentPlace} />
       </Modal>
     </main>
   );
