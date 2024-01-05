@@ -27,10 +27,28 @@ export function Header() {
                   Home
                 </Link>
               </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/trips">
+              <li className="nav-item dropdown">
+                <Link
+                  className="nav-link dropdown-toggle"
+                  to="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
                   Trips
                 </Link>
+                <ul className="dropdown-menu">
+                  <li>
+                    <Link className="dropdown-item" to="/trips">
+                      All Trips
+                    </Link>
+                  </li>
+                  <li>
+                    <Link className="dropdown-item" to="/trips/new">
+                      New Trip
+                    </Link>
+                  </li>
+                </ul>
               </li>
               {localStorage.jwt === undefined ? (
                 <>
