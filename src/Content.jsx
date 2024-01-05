@@ -3,13 +3,14 @@ import { TripsNew } from "./TripsNew";
 import { TripsShow } from "./TripsShow";
 import { TripsUpdate } from "./TripsUpdate";
 import { JournalEntriesIndex } from "./JournalEntriesIndex";
+import { JournalEntriesNew } from "./JournalEntriesNew";
+import { JournalEntriesShow } from "./JournalEntriesShow";
 import { Signup } from "./Signup";
 import { Login } from "./Login";
 import { Modal } from "./Modal";
 import { useState, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import axios from "axios";
-import { JournalEntriesNew } from "./JournalEntriesNew";
 
 export function Content() {
   const [trips, setTrips] = useState([]);
@@ -17,6 +18,8 @@ export function Content() {
   const [isTripsUpdateVisible, setIsTripsUpdateVisible] = useState(false);
   const [currentTrip, setCurrentTrip] = useState({});
   const [journalEntries, setJournalEntries] = useState([]);
+  const [isJournalEntriesShowVisible, setIsJournalEntriesShowVisible] = useState(false);
+  const [currentJournalEntry, setCurrentJournalEntry] = useState({});
 
   const handleIndexTrips = () => {
     axios.get("http://localhost:3000/trips.json").then((response) => {
@@ -90,6 +93,15 @@ export function Content() {
     });
   };
 
+  const handleShowJournalEntry = (journalEntry) => {
+    setIsJournalEntriesShowVisible(true);
+    setCurrentJournalEntry(journalEntry);
+  };
+
+  const handleClose = () => {
+    setIsJournalEntriesShowVisible(false);
+  };
+
   return (
     <main className="container">
       <h1>Welcome to your Travel Journal!</h1>
@@ -105,7 +117,10 @@ export function Content() {
         />
         <Route path="/trips/new" element={<TripsNew onCreateTrip={handleCreateTrip} />} />
 
-        <Route path="/journal_entries" element={<JournalEntriesIndex journalEntries={journalEntries} />} />
+        <Route
+          path="/journal_entries"
+          element={<JournalEntriesIndex journalEntries={journalEntries} onShowJournalEntry={handleShowJournalEntry} />}
+        />
         <Route
           path="/journal_entries/new"
           element={<JournalEntriesNew trips={trips} onCreateJournalEntry={handleCreateJournalEntry} />}
@@ -119,6 +134,10 @@ export function Content() {
       </Modal>
       <Modal show={isTripsUpdateVisible} onClose={handleCloseUpdate}>
         <TripsUpdate trip={currentTrip} onUpdateTrip={handleUpdateTrip} onDestroyTrip={handleDestroyTrip} />
+      </Modal>
+
+      <Modal show={isJournalEntriesShowVisible} onClose={handleClose}>
+        <JournalEntriesShow journalEntry={currentJournalEntry} />
       </Modal>
     </main>
   );

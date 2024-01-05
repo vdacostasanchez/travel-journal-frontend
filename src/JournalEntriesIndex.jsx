@@ -6,6 +6,7 @@ export function JournalEntriesIndex(props) {
         <div key={journalEntry.id}>
           <h2>{journalEntry.title}</h2>
           <p>{journalEntry.date}</p>
+          <button onClick={() => props.onShowJournalEntry(journalEntry)}>More Info</button>
         </div>
       ))}
     </div>
