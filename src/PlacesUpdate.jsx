@@ -5,9 +5,9 @@ export function PlacesUpdate(props) {
     props.onUpdatePlace(props.place.id, params, () => event.target.reset());
   };
 
-  // const handleClick = () => {
-  //   props.onDestroyPlace(props.place);
-  // };
+  const handleClick = () => {
+    props.onDestroyPlace(props.place);
+  };
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -32,7 +32,7 @@ export function PlacesUpdate(props) {
         </div>
         <button type="submit">Update Place</button>
       </form>
-      {/* <button onClick={handleClick}>Destroy Journal Entry</button> */}
+      <button onClick={handleClick}>Destroy Place</button>
     </div>
   );
 }

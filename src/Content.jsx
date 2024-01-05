@@ -200,6 +200,14 @@ export function Content() {
     });
   };
 
+  const handleDestroyPlace = (place) => {
+    axios.delete(`http://localhost:3000/places/${place.id}.json`).then((response) => {
+      console.log(response);
+      setPlaces(places.filter((p) => p.id !== place.id));
+      handleCloseUpdatePlaces();
+    });
+  };
+
   return (
     <main className="container">
       <h1>Welcome to your Travel Journal!</h1>
@@ -264,7 +272,7 @@ export function Content() {
           trips={trips}
           place={currentPlace}
           onUpdatePlace={handleUpdatePlace}
-          // onDestroyPlace={handleDestroyPlace}
+          onDestroyPlace={handleDestroyPlace}
         />
       </Modal>
     </main>
