@@ -17,7 +17,6 @@ export function Content() {
 
   const handleIndexTrips = () => {
     axios.get("http://localhost:3000/trips.json").then((response) => {
-      console.log(response.data);
       setTrips(response.data);
     });
   };
@@ -53,7 +52,15 @@ export function Content() {
         })
       );
       successCallback();
-      handleClose();
+      handleCloseUpdate();
+    });
+  };
+
+  const handleDestroyTrip = (id) => {
+    axios.delete(`http://localhost:3000/trips/${id}.json`).then((response) => {
+      console.log(response);
+      setTrips(trips.filter((t) => t.id !== id));
+      handleCloseUpdate();
     });
   };
 
@@ -68,6 +75,8 @@ export function Content() {
   return (
     <main>
       <h1>Welcome to your Travel Journal!</h1>
+      <Signup />
+      <Login />
       <Routes>
         <Route
           path="/trips"
@@ -79,10 +88,8 @@ export function Content() {
         <TripsShow trip={currentTrip} />
       </Modal>
       <Modal show={isTripsUpdateVisible} onClose={handleCloseUpdate}>
-        <TripsUpdate trip={currentTrip} onUpdateTrip={handleUpdateTrip} />
+        <TripsUpdate trip={currentTrip} onUpdateTrip={handleUpdateTrip} onDestroyTrip={handleDestroyTrip} />
       </Modal>
-      <Signup />
-      <Login />
     </main>
   );
 }

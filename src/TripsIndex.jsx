@@ -1,5 +1,4 @@
 export function TripsIndex(props) {
-  console.log(props, "hello");
   return (
     <div>
       <h1>All Trips</h1>

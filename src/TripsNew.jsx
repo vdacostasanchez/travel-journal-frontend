@@ -3,6 +3,7 @@ export function TripsNew(props) {
     event.preventDefault();
     const params = new FormData(event.target);
     props.onCreateTrip(params, () => event.target.reset());
+    window.location.href = "/trips";
   };
 
   return (
