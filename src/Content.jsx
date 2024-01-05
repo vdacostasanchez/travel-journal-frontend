@@ -9,6 +9,7 @@ import { Modal } from "./Modal";
 import { useState, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import axios from "axios";
+import { JournalEntriesNew } from "./JournalEntriesNew";
 
 export function Content() {
   const [trips, setTrips] = useState([]);
@@ -82,6 +83,13 @@ export function Content() {
 
   useEffect(handleIndexJournalEntries, []);
 
+  const handleCreateJournalEntry = (params, successCallback) => {
+    axios.post("http://localhost:3000/journal_entries.json", params).then((response) => {
+      setJournalEntries([...journalEntries, response.data]);
+      successCallback();
+    });
+  };
+
   return (
     <main className="container">
       <h1>Welcome to your Travel Journal!</h1>
@@ -95,8 +103,14 @@ export function Content() {
           path="/trips"
           element={<TripsIndex trips={trips} onShowTrip={handleShowTrip} onUpdateTrip={handleUpdateShowTrip} />}
         />
-        <Route path="/journal_entries" element={<JournalEntriesIndex journalEntries={journalEntries} />} />
         <Route path="/trips/new" element={<TripsNew onCreateTrip={handleCreateTrip} />} />
+
+        <Route path="/journal_entries" element={<JournalEntriesIndex journalEntries={journalEntries} />} />
+        <Route
+          path="/journal_entries/new"
+          element={<JournalEntriesNew trips={trips} onCreateJournalEntry={handleCreateJournalEntry} />}
+        />
+
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
       </Routes>
