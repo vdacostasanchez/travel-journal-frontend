@@ -7,6 +7,7 @@ import { JournalEntriesNew } from "./JournalEntriesNew";
 import { JournalEntriesShow } from "./JournalEntriesShow";
 import { JournalEntriesUpdate } from "./JournalEntriesUpdate";
 import { PlacesIndex } from "./PlacesIndex";
+import { PlacesNew } from "./PlacesNew";
 import { MyMap } from "./MyMap";
 import { Signup } from "./Signup";
 import { Login } from "./Login";
@@ -156,6 +157,13 @@ export function Content() {
 
   useEffect(handleIndexPlaces, []);
 
+  const handleCreatePlace = (params, successCallback) => {
+    axios.post("http://localhost:3000/places.json", params).then((response) => {
+      setPlaces([...places, response.data]);
+      successCallback();
+    });
+  };
+
   return (
     <main className="container">
       <h1>Welcome to your Travel Journal!</h1>
@@ -184,6 +192,7 @@ export function Content() {
         />
 
         <Route path="/places" element={<PlacesIndex places={places} />} />
+        <Route path="/places/new" element={<PlacesNew trips={trips} onCreatePlace={handleCreatePlace} />} />
 
         <Route path="/map" element={<MyMap />} />
         <Route path="/signup" element={<Signup />} />
