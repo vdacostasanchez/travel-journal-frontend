@@ -75,14 +75,15 @@ export function Content() {
   return (
     <main className="container">
       <h1>Welcome to your Travel Journal!</h1>
-      <Signup />
-      <Login />
+
       <Routes>
         <Route
           path="/trips"
           element={<TripsIndex trips={trips} onShowTrip={handleShowTrip} onUpdateTrip={handleUpdateShowTrip} />}
         />
         <Route path="/trips/new" element={<TripsNew onCreateTrip={handleCreateTrip} />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
       <Modal show={isTripsShowVisible} onClose={handleCloseShow}>
         <TripsShow trip={currentTrip} />

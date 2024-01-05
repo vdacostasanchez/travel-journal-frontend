@@ -20,7 +20,7 @@ export function Login() {
         axios.defaults.headers.common["Authorization"] = `Bearer ${response.data.jwt}`;
         localStorage.setItem("jwt", response.data.jwt);
         event.target.reset();
-        window.location.href = "/trips";
+        window.location.href = "/";
       })
       .catch((error) => {
         console.log(error.response);
@@ -29,7 +29,7 @@ export function Login() {
   };
 
   return (
-    <div>
+    <div id="login">
       <h1>Login</h1>
       <ul>
         {erros.map((error) => (
