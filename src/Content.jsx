@@ -73,7 +73,7 @@ export function Content() {
   };
 
   return (
-    <main>
+    <main className="container">
       <h1>Welcome to your Travel Journal!</h1>
       <Signup />
       <Login />
