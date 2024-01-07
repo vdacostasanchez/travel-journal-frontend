@@ -11,6 +11,8 @@ import { PlacesNew } from "./PlacesNew";
 import { PlacesShow } from "./PlacesShow";
 import { PlacesUpdate } from "./PlacesUpdate";
 import { MyMap } from "./MyMap";
+import { MyCalendar } from "./MyCalendar";
+import { Home } from "./Home";
 import { Signup } from "./Signup";
 import { Login } from "./Login";
 import { Modal } from "./Modal";
@@ -213,7 +215,7 @@ export function Content() {
       <h1>Welcome to your Travel Journal!</h1>
 
       <Routes>
-        <Route path="/" element={<MyMap />} />
+        <Route path="/" element={<Home />} />
         <Route
           path="/trips"
           element={<TripsIndex trips={trips} onShowTrip={handleShowTrip} onUpdateTrip={handleUpdateShowTrip} />}
