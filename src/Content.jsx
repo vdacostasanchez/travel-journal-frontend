@@ -11,7 +11,6 @@ import { PlacesNew } from "./PlacesNew";
 import { PlacesShow } from "./PlacesShow";
 import { PlacesUpdate } from "./PlacesUpdate";
 import { MyMap } from "./MyMap";
-import { MyCalendar } from "./MyCalendar";
 import { Home } from "./Home";
 import { Signup } from "./Signup";
 import { Login } from "./Login";
@@ -164,6 +163,7 @@ export function Content() {
   const handleCreatePlace = (params, successCallback) => {
     axios.post("http://localhost:3000/places.json", params).then((response) => {
       setPlaces([...places, response.data]);
+      console.log(response.data);
       successCallback();
     });
   };
