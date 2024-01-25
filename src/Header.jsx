@@ -1,7 +1,16 @@
 import { Link } from "react-router-dom";
 import { LogoutLink } from "./LogoutLink";
+import { useState } from "react";
 
 export function Header() {
+  const [tripsDropdownVisible, setTripsDropdownVisible] = useState(false);
+  const [entriesDropdownVisible, setEntriesDropdownVisible] = useState(false);
+  const [placesDropdownVisible, setPlacesDropdownVisible] = useState(false);
+
+  const handleTripsToggle = () => setTripsDropdownVisible(!tripsDropdownVisible);
+  const handleEntriesToggle = () => setEntriesDropdownVisible(!entriesDropdownVisible);
+  const handlePlacesToggle = () => setPlacesDropdownVisible(!placesDropdownVisible);
+
   return (
     <header>
       <nav className="navbar navbar-expand-lg bg-light">
@@ -32,17 +41,11 @@ export function Header() {
                   Map
                 </Link>
               </li>
-              <li className="nav-item dropdown">
-                <Link
-                  className="nav-link dropdown-toggle"
-                  to="#"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
+              <li className="nav-item dropdown" onMouseEnter={handleTripsToggle} onMouseLeave={handleTripsToggle}>
+                <Link className="nav-link " to="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   Trips
                 </Link>
-                <ul className="dropdown-menu">
+                <ul className={`dropdown-menu ${tripsDropdownVisible ? "show" : ""}`}>
                   <li>
                     <Link className="dropdown-item" to="/trips">
                       All Trips
@@ -55,17 +58,11 @@ export function Header() {
                   </li>
                 </ul>
               </li>
-              <li className="nav-item dropdown">
-                <Link
-                  className="nav-link dropdown-toggle"
-                  to="#"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
+              <li className="nav-item dropdown" onMouseEnter={handleEntriesToggle} onMouseLeave={handleEntriesToggle}>
+                <Link className="nav-link " to="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   Journal Entries
                 </Link>
-                <ul className="dropdown-menu">
+                <ul className={`dropdown-menu ${entriesDropdownVisible ? "show" : ""}`}>
                   <li>
                     <Link className="dropdown-item" to="/journal_entries">
                       All Journal Entries
@@ -78,17 +75,11 @@ export function Header() {
                   </li>
                 </ul>
               </li>
-              <li className="nav-item dropdown">
-                <Link
-                  className="nav-link dropdown-toggle"
-                  to="#"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
+              <li className="nav-item dropdown" onMouseEnter={handlePlacesToggle} onMouseLeave={handlePlacesToggle}>
+                <Link className="nav-link " to="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   Places
                 </Link>
-                <ul className="dropdown-menu">
+                <ul className={`dropdown-menu ${placesDropdownVisible ? "show" : ""}`}>
                   <li>
                     <Link className="dropdown-item" to="/places">
                       All Places
