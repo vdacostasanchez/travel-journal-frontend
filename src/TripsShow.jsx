@@ -8,7 +8,7 @@ export function TripsShow(props) {
         {props.trip.start_date} - {props.trip.end_date}
       </p>
       <br></br>
-      <h1>Places Visited in Trip</h1>
+      <h1>Places</h1>
       {props.trip.places.map((place) => (
         <div key={place.id}>
           <h2>{place.name}</h2>
