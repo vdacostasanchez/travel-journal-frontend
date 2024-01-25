@@ -1,7 +1,17 @@
+import { MyCalendar } from "./MyCalendar";
+import { useState } from "react";
+
 export function TripsNew(props) {
+  const [selectedDates, setSelectedDates] = useState([]);
+
+  const handleCalendarChange = (dates) => {
+    setSelectedDates(dates);
+  };
   const handleSubmit = (event) => {
     event.preventDefault();
     const params = new FormData(event.target);
+    params.set("start_date", selectedDates[0]?.toDateString());
+    params.set("end_date", selectedDates[1]?.toDateString());
     props.onCreateTrip(params, () => event.target.reset());
     window.location.href = "/trips";
   };
@@ -10,14 +20,9 @@ export function TripsNew(props) {
     <div>
       <h1>New Trip</h1>
       <form onSubmit={handleSubmit}>
+        <MyCalendar onSelectDates={handleCalendarChange} />
         <div>
-          Start Date: <input type="date" name="start_date" />
-        </div>
-        <div>
-          End Date: <input type="date" name="end_date" />
-        </div>
-        <div>
-          Location: <input type="text" name="location" />
+          Location(s): <input type="text" name="location" />
         </div>
         <button type="submit">Create Trip</button>
       </form>

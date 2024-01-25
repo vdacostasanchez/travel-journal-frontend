@@ -2,22 +2,27 @@ import { useState } from "react";
 import Calendar from "react-calendar";
 import "./MyCalendar.css";
 
-export function MyCalendar() {
+export function MyCalendar({ onSelectDates }) {
   const [value, setValue] = useState(new Date());
+
+  const handleDateChange = (newValue) => {
+    setValue(newValue);
+    onSelectDates(newValue);
+  };
 
   return (
     <main>
       <div className="calendar-container">
-        <Calendar onChange={setValue} value={value} selectRange={true} />
+        <Calendar onChange={handleDateChange} value={value} selectRange={true} />
       </div>
       {value.length > 0 ? (
-        <p className="text-center">
-          <span className="bold">Start:</span> {value[0].toDateString()}
+        <p>
+          <span className="bold">Start Date:</span> {value[0].toDateString()}
           <br></br>
-          <span className="bold">End:</span> {value[1].toDateString()}
+          <span className="bold">End Date:</span> {value[1].toDateString()}
         </p>
       ) : (
-        <p className="text-center">
+        <p>
           <span className="bold">Defualt selected date:</span> {value.toDateString()}
         </p>
       )}

@@ -2,7 +2,7 @@ import "./Modal";
 
 export function TripsShow(props) {
   return (
-    <div>
+    <div key={props.trip.id}>
       <h1>{props.trip.location}</h1>
       <p>
         {props.trip.start_date} - {props.trip.end_date}
