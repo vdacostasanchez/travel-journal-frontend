@@ -16,6 +16,15 @@ export function TripsShow(props) {
           <p>{place.address}</p>
         </div>
       ))}
+      <br></br>
+      <h1>Journal Entries</h1>
+      {props.trip.journal_entries.map((journal_entry) => (
+        <div key={journal_entry.id}>
+          <h2>{journal_entry.title}</h2>
+          <p>{journal_entry.date}</p>
+          <p>{journal_entry.entry}</p>
+        </div>
+      ))}
     </div>
   );
 }
